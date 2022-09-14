@@ -1,8 +1,3 @@
-* {
-  padding: 0;
-  box-sizing: border-box;
-}
-
 .App {
   text-align: center;
 }
@@ -33,6 +28,20 @@
   color: #61dafb;
 }
 
+
+
+
+.main-bg {
+  height: 300px;
+  /* background-image: url('./bg.png'); */
+  background-size: cover;
+  background-position: center;
+}
+
+
+
+
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -40,28 +49,4 @@
   to {
     transform: rotate(360deg);
   }
-}
-
-
-
-.black-nav {
-  background-color: #000000;
-  color: #ffffff;
-  text-align: left;
-  display: flex;
-  padding: 20px;
-}
-.list {
-  padding: 20px;
-  text-align-last: left;
-  border-bottom: 1px solid gray;
-}
-.list .thumb{
-  cursor: pointer;
-}
-.modal{
-  margin-top : 20px;
-  padding : 20px;
-  background : #eee;
-  text-align : left;
 }
