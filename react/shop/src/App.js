@@ -8,10 +8,14 @@ import './App.css';
 import data from './data.js'
 import {Detail} from './pages/Detail.js'
 import {Routes, Route, Link, useNavigate, Outlet} from 'react-router-dom'
+import axios from 'axios'; 
 
 function App() {
-  let [shoes] = useState(data);
+  let [shoes, setShoes] = useState(data);
   let navigate = useNavigate();
+  let [moreBtn, setMoreBtn] = useState(0);
+  let [loading, setLoading] = useState(false);
+  let [noitem, setItem] = useState(false);
 
   return (
     <div className="App">
@@ -26,19 +30,56 @@ function App() {
         </Nav>
         </Container>
       </Navbar>
-      
-      {/* <Link to="/">홈</Link>
-      <Link to="/detail">상세페이지</Link>
- */}
+
       <Routes>
         <Route path="/" element={
           <>
             <div className="main-bg" style={{ backgroundImage: `url(${bg})` }}></div>
-            <Container>
-              <Row>
+            <div className="container">
+              <div className="row">
                 <Card shoes={shoes}></Card>
-              </Row>
-            </Container>
+              </div>
+            </div>
+
+            {
+              loading == true ? <Loading></Loading> : null
+            }
+            {
+              noitem == true? <NoItem></NoItem> : null
+            }
+
+            <button onClick={(e)=>{
+              setLoading(true);
+
+              if(moreBtn == 0) {
+                axios.get('https://codingapple1.github.io/shop/data2.json')
+                .then((result)=>{ 
+                  setLoading(false);
+                  let copyShoes = [...shoes];
+                  copyShoes.push(...result.data);
+                  setShoes(copyShoes);
+                }).catch(()=> {
+                  console.log('데이터 가져오기 실패');
+                });
+                setMoreBtn(moreBtn+1);
+              } else if(moreBtn == 1) {
+                axios.get('https://codingapple1.github.io/shop/data3.json')
+                .then((result)=>{ 
+                  setLoading(false);
+                  let copyShoes = [...shoes];
+                  copyShoes.push(...result.data);
+                  setShoes(copyShoes);
+                }).catch(()=> {
+                  console.log('데이터 가져오기 실패');
+                });
+                setMoreBtn(moreBtn+1);
+              } else {
+                setLoading(false);
+                setItem(true);
+              }
+              moreBtn >= 2 ? e.target.style.display = 'none' : null;
+            }}>더보기</button>
+            
           </>
         } />
         <Route path="/detail/:id" element={<Detail shoes={shoes}/>} />
@@ -52,6 +93,7 @@ function App() {
         </Route>
         <Route path="*" element={<div>없는 페이지 입니다.</div>} />
       </Routes>
+      
 
     </div>
   );
@@ -61,11 +103,11 @@ function Card(props){
   return(
     shoeslist.map(function(a, i) {
       return(
-        <Col key={i}>
-          <img src={process.env.PUBLIC_URL + `/shoes${i+1}.jpeg`} width="80%"/>
+        <div className="col-md-4" key={i}>
+          <img src={`https://codingapple1.github.io/shop/shoes${i+1}.jpg`} width="80%"/>
           <h4>{shoeslist[i].title}</h4>
           <p>{shoeslist[i].content}</p>
-        </Col>
+        </div>
       )
     })
   )
@@ -85,6 +127,21 @@ function Event() {
     <>
       <h4>오늘의 이벤트</h4>
       <Outlet />
+    </>
+  )
+}
+
+function Loading(){
+  return(
+    <>
+      <p>상품 목록을 불러오고 있습니다.</p>
+    </>
+  )
+}
+function NoItem(){
+  return(
+    <>
+      <p>더 이상 상품이 존재하지 않습니다.</p>
     </>
   )
 }
