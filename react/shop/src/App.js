@@ -6,9 +6,10 @@ import './App.css';
 /* import a from './data.js' */
 /* import {a, b} from './data.js' */
 import data from './data.js'
-import {Detail} from './pages/Detail.js'
+import {Detail} from './pages/Detail.js';
 import {Routes, Route, Link, useNavigate, Outlet} from 'react-router-dom'
 import axios from 'axios'; 
+import Cart from './component/Cart.js'
 
 function App() {
   let [shoes, setShoes] = useState(data);
@@ -25,8 +26,7 @@ function App() {
         <Nav className="me-auto">
           <Nav.Link onClick={()=>{ navigate('/') }}>Home</Nav.Link>
           <Nav.Link onClick={()=>{ navigate('/detail') }}>Detail</Nav.Link>
-          <Nav.Link onClick={()=>{ navigate('/about') }}>About</Nav.Link>
-          <Nav.Link onClick={()=>{ navigate('/event') }}>Event</Nav.Link>
+          <Nav.Link onClick={()=>{ navigate('/cart') }}>Cart</Nav.Link>
         </Nav>
         </Container>
       </Navbar>
@@ -83,14 +83,7 @@ function App() {
           </>
         } />
         <Route path="/detail/:id" element={<Detail shoes={shoes}/>} />
-        <Route path="/about" element={<About/>}>
-          <Route path="member" element={<div>멤버라능</div>}/>
-          <Route path="location" element={<div>위치정보라능</div>}/>
-        </Route>
-        <Route path="/event" element={<Event/>}>
-          <Route path="one" element={<div>첫 주문시 양배추즙 서비스</div>}/>
-          <Route path="two" element={<div>생일 기념 쿠폰 받기</div>}/>
-        </Route>
+        <Route path="/cart" element={ <Cart/>}/>
         <Route path="*" element={<div>없는 페이지 입니다.</div>} />
       </Routes>
       
@@ -110,24 +103,6 @@ function Card(props){
         </div>
       )
     })
-  )
-}
-
-function About(){
-  return(
-    <div>
-      <p>어바웃페이지이이이</p>
-      <Outlet></Outlet>
-    </div>
-  )
-}
-
-function Event() {
-  return(
-    <>
-      <h4>오늘의 이벤트</h4>
-      <Outlet />
-    </>
   )
 }
 

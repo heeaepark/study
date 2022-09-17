@@ -3,6 +3,8 @@ import { useParams } from "react-router"
 import styled from 'styled-components';
 import {Nav} from 'react-bootstrap';
 import './../App.css';
+import { useDispatch } from "react-redux";
+import { addItem } from './../store.js';
 
 const Detail = function(props) {
     /* let alertDisplay = () => {
@@ -21,6 +23,7 @@ const Detail = function(props) {
     let [inputValue, setInputValue] = useState('');
     let [tab, setTab] = useState(0);
     let [fade2, setFade2] = useState('');
+    let dispatch = useDispatch();
 
     useEffect(() => {
       /* alertDisplay(); */
@@ -64,10 +67,14 @@ const Detail = function(props) {
             <input type="text" onChange={(e)=> {
               setInputValue(e.target.value);
             }}/>
+            <h4 className="pt-5">{findProd.id}</h4>
             <h4 className="pt-5">{findProd.title}</h4>
             <p>{findProd.content}</p>
             <p>{findProd.price}</p>
-            <button className="btn btn-danger">주문하기</button> 
+            <button className="btn btn-danger" onClick={()=>{
+              dispatch(addItem( {id: findProd.id, name: findProd.title, count: 1} ))
+            }
+            }>주문하기</button> 
           </div>
         </div>
         <div className="row">
