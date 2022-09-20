@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button, Navbar, Container, Nav, Row, Col} from 'react-bootstrap';
 import bg from './bg.png';
 import './App.css';
@@ -9,7 +9,10 @@ import data from './data.js'
 import {Detail} from './pages/Detail.js';
 import {Routes, Route, Link, useNavigate, Outlet} from 'react-router-dom'
 import axios from 'axios'; 
+import Card from './component/Card.js'
 import Cart from './component/Cart.js'
+//import {RecentlyItem} from './component/RecentlyItems.js'
+import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query'
 
 function App() {
   let [shoes, setShoes] = useState(data);
@@ -17,6 +20,22 @@ function App() {
   let [moreBtn, setMoreBtn] = useState(0);
   let [loading, setLoading] = useState(false);
   let [noitem, setItem] = useState(false);
+
+  useEffect(()=> {
+    
+    if(localStorage.getItem('watched') === null) {
+      localStorage.setItem('watched', JSON.stringify( [] ));
+    }
+  }, [])
+
+  let result = useQuery(['작명'], ()=>
+    axios.get('https://codingapple1.github.io/userdata.json')
+    .then((a)=>{ 
+      console.log('요청 됨~~~~~~')
+      return a.data 
+    }),
+    
+  )
 
   return (
     <div className="App">
@@ -28,12 +47,19 @@ function App() {
           <Nav.Link onClick={()=>{ navigate('/detail') }}>Detail</Nav.Link>
           <Nav.Link onClick={()=>{ navigate('/cart') }}>Cart</Nav.Link>
         </Nav>
+        <Nav className="ms-auto" style={{'color' : 'white'}}>
+          {/* {result.isLoading ? '로딩중' : result.data.name} */}
+          {result.isLoading && '로딩중'}
+          {result.data && result.data.name}
+          {result.error && '에러 발생'}
+        </Nav>
         </Container>
       </Navbar>
 
       <Routes>
         <Route path="/" element={
           <>
+            <RecentlyItem shoes={shoes} />
             <div className="main-bg" style={{ backgroundImage: `url(${bg})` }}></div>
             <div className="container">
               <div className="row">
@@ -91,18 +117,24 @@ function App() {
     </div>
   );
 }
-function Card(props){
-  let shoeslist = props.shoes;
+function RecentlyItem(props){
+  let navigate = useNavigate();
+  let recentlyStorage = JSON.parse(localStorage.getItem('watched'));
+  let shoesList = props.shoes;
   return(
-    shoeslist.map(function(a, i) {
-      return(
-        <div className="col-md-4" key={i}>
-          <img src={`https://codingapple1.github.io/shop/shoes${i+1}.jpg`} width="80%"/>
-          <h4>{shoeslist[i].title}</h4>
-          <p>{shoeslist[i].content}</p>
-        </div>
-      )
-    })
+    <div className="recently-item-list">
+      <p>최근 본 상품</p>
+      {
+        recentlyStorage.map((a, i)=>{
+          return(
+            <div className="recently-item" key={i}>
+              <img src={`https://codingapple1.github.io/shop/shoes${a+1}.jpg`} onClick={()=>{ navigate('/detail/'+a) }} width="80%"/>
+              <p>{shoesList[a].title}</p>
+            </div>
+          )
+        })
+      }
+    </div>
   )
 }
 

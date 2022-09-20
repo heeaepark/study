@@ -46,7 +46,15 @@
   transition: opacity 0.5s;
 }
 
-
+.recently-item-list {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  background-color: #fff;
+  border: 1px solid #eee;
+  padding: 10px;
+  max-width: 200px;
+}
 
 
 @keyframes App-logo-spin {

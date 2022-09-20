@@ -47,6 +47,16 @@ const Detail = function(props) {
         setFade2('')
       )
     }, []);
+
+    /* 최근 본 상품 */
+    useEffect(()=>{
+      let getWatched = JSON.parse(localStorage.getItem('watched'));
+      getWatched.unshift(parseInt(id));
+      let set = new Set(getWatched);
+      let setWatched = [...set];
+      localStorage.setItem('watched', JSON.stringify(setWatched));
+    }, [])
+
     return(
       <div className={`container start ${fade2}`}>
         {
@@ -56,7 +66,7 @@ const Detail = function(props) {
         }
         <div className="row">
           <div className="col-md-6">
-              <img src="https://codingapple1.github.io/shop/shoes1.jpg" width="100%" />
+              <img src={`https://codingapple1.github.io/shop/shoes${findProd.id+1}.jpg`} width="100%" />
           </div>
           <div className="col-md-6">
             {
@@ -67,7 +77,6 @@ const Detail = function(props) {
             <input type="text" onChange={(e)=> {
               setInputValue(e.target.value);
             }}/>
-            <h4 className="pt-5">{findProd.id}</h4>
             <h4 className="pt-5">{findProd.title}</h4>
             <p>{findProd.content}</p>
             <p>{findProd.price}</p>
