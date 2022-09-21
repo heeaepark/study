@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { useEffect, useState } from 'react';
+import { lazy, useEffect, useState } from 'react';
 import { Button, Navbar, Container, Nav, Row, Col} from 'react-bootstrap';
 import bg from './bg.png';
 import './App.css';
@@ -11,8 +11,8 @@ import {Routes, Route, Link, useNavigate, Outlet} from 'react-router-dom'
 import axios from 'axios'; 
 import Card from './component/Card.js'
 import Cart from './component/Cart.js'
-//import {RecentlyItem} from './component/RecentlyItems.js'
-import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query'
+import RecentlyItem from './component/RecentlyItems.js'
+import {  useQuery } from '@tanstack/react-query'
 
 function App() {
   let [shoes, setShoes] = useState(data);
@@ -59,7 +59,10 @@ function App() {
       <Routes>
         <Route path="/" element={
           <>
-            <RecentlyItem shoes={shoes} />
+            <div className="recently-item-list">
+              <p>최근 본 상품</p>
+              <RecentlyItem shoes={shoes} />
+            </div>
             <div className="main-bg" style={{ backgroundImage: `url(${bg})` }}></div>
             <div className="container">
               <div className="row">
@@ -117,6 +120,7 @@ function App() {
     </div>
   );
 }
+/* 
 function RecentlyItem(props){
   let navigate = useNavigate();
   let recentlyStorage = JSON.parse(localStorage.getItem('watched'));
@@ -137,7 +141,7 @@ function RecentlyItem(props){
     </div>
   )
 }
-
+ */
 function Loading(){
   return(
     <>
