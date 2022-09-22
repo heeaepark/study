@@ -60,7 +60,7 @@ function App() {
         <Route path="/" element={
           <>
             <div className="recently-item-list">
-              <p>최근 본 상품</p>
+              <p>최근 본 상품!</p>
               <RecentlyItem shoes={shoes} />
             </div>
             <div className="main-bg" style={{ backgroundImage: `url(${bg})` }}></div>
