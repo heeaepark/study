@@ -77,7 +77,7 @@ function App() {
       <input type="text" onInput={(e) => {
         입력값변경(e.target.value);
       }}></input>
-      <button onClick={addPost}>글발행</button>
+      <button onClick={addPost}>글발행!</button>
 
 
       {
