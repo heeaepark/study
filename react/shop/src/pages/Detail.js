@@ -18,6 +18,7 @@ const Detail = function(props) {
     let findProd = props.shoes.find(function(el){
         return el.id == id;
     });
+    console.log(id)
     let [alert, setAlert] = useState(true);
     let [checkAlert, setChekAlert] = useState(false);
     let [inputValue, setInputValue] = useState('');

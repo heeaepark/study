@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<style>
+
+  @keyframes space {
+    100% {
+      background-position-x: -2550px;
+    }
+  }
+  html {
+    background-color: rgb(47, 47, 47);
+  }
+  .spaceship {
+    width: 150px;
+    height: 150px;
+    background: url('./images/sprite_spaceship.png') no-repeat 0 0 / auto 150px;
+    animation: space 1s infinite steps(17); /* steps 기능을 통해 프레임별로 움직이도록 할 것 */
+  }
+</style>
+<body>
+  <div class="spaceship"></div>
+</body>
+</html>
