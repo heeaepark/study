@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Interactive Web</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <style>
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        .characters {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            background: #fff000;
+        }
+        .ilbuni {
+            width: 100px;
+            cursor: pointer;
+        }
+        .characters .ilbuni {
+            display: inline-block;
+        }
+        .special {
+            border: 10px dashed red;
+        }
+    </style>
+</head>
+<body>
+    <div class="characters">
+        <div class="ilbuni a">
+            <img src="images/ilbuni_0.png" alt="일분이">
+        </div>
+        <div class="ilbuni b">
+            <img src="images/ilbuni_1.png" alt="일분이">
+        </div>
+        <div class="ilbuni c">
+            <img src="images/ilbuni_2.png" alt="일분이">
+        </div>
+        <div class="ilbuni d">
+            <img src="images/ilbuni_3.png" alt="일분이">
+        </div>
+    </div>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', function(){/* 이벤트를 작성할 땐 윈도우돔이 전부 로드 된 후 실행될 수 있게 load 이벤트 안에 작성 */
+        });
+        (function(){/* 전역변수 방지를 위해 익명의 즉시실행 함수 선언 */
+            const ilbun = document.querySelector('.ilbuni:nth-child(3)');
+
+            function clickIlbunHandler() {
+                ilbun.classList.toggle('special');
+            }
+            ilbun.addEventListener('click', clickIlbunHandler);
+        })();
+        
+        (function(){
+            const char = document.querySelector('.characters');
+            function clickHandler(e){
+                console.log(this);
+                console.log(e.currentTarget);
+                console.log(e.target);
+            }
+            char.addEventListener('click', clickHandler);
+        })();
+    </script>
+</body>
+</html>
