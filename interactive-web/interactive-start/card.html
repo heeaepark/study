@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Object</title>
+    <style>
+    .card {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 100px;
+        height: 150px;
+        border: 2px solid black;
+        border-radius: 10px;
+        font-size: 3rem;
+        font-weight: 900;
+    }
+    </style>
+</head>
+<body>
+    <script>
+
+    //생성자 (Constructor 생성자 함수는 대문자로!)
+    //값이 바뀌는 애들은 constructor로
+    function Person(name, age){
+        this.name = name;
+        this.age = age;
+    }
+    
+    //내부가 변할게 없는 것은 prototype으로 css로 따지면 공통된 값들
+    Person.prototype.introduce = function(){
+        console.log(`안녕 나는 ${this.name}이고! 나이는 ${this.age}살이야~~`);
+    }
+    //인스턴스
+    const person1 = new Person('일분이', 1);
+    const person2 = new Person('이분이', 2);
+
+    person1.introduce();
+    person2.introduce();
+
+
+
+
+
+
+
+
+
+
+    function Card(num, color){
+        this.num = num;
+        this.color = color;
+        this.init();
+    }
+
+    Card.prototype = {
+        //prototype 객체 안에 Card constructor 선언
+        constructor: Card,
+        init: function(){
+            const mainElem = document.createElement('div');
+            mainElem.style.color = this.color;
+            mainElem.innerHTML = this.num;
+            mainElem.classList.add('card');
+            document.body.appendChild(mainElem);
+        }
+    }
+
+    const card1 = new Card(1, 'green')
+    const card2 = new Card(7, 'blue')
+
+    </script>
+</body>
+</html>

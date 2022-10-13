@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>setTimeout</title>
+	<style>
+		.btn {
+			font-size: 2rem;
+		}
+	</style>
+</head>
+<body>
+	<button class="btn">취소</button>
+
+	<script>
+		const time = setTimeout(()=> {
+			console.log('뾰로로롱~ 1초 뒤에 나타났지요옹');
+		}, 1000);
+
+
+		function sample(){
+			console.log('샘플함수 나타나라!')
+		}
+		setTimeout(sample, 500);
+		clearTimeout(time)//
+	</script>
+</body>
+</html>
