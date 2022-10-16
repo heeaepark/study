@@ -75,7 +75,12 @@
   }
 
   function calcValues(values, currentYOffset) {
-
+    let rv;
+    //현재 씬에서부터 스크롤 된 비율 구하기
+    let scrollRatio = currentYOffset / sceneInfo[currentScene].scrollHeight;
+    console.log(scrollRatio);
+    rv = scrollRatio * (values[1] - values[0]) + values[0];
+    return rv;
   }
 
   function playAnimation(){
@@ -85,22 +90,21 @@
 
     switch(currentScene) {
       case 0:
-        console.log('0 play');
-        let messageA_opacity_0 = values.messageA_opacity[0];
-        let messageA_opacity_1 = values.messageA_opacity[1];
-        console.log(calcValues())
+        //console.log('0 play');
+        let messageA_opacity_in = calcValues(values.messageA_opacity, currentYOffset);
+        objs.messageA.style.opacity = messageA_opacity_in;
         break;
 
       case 1:
-          console.log('1 play');
-          break;
+        //console.log('1 play');
+        break;
 
       case 2:
-        console.log('2 play');
+        //console.log('2 play');
         break;
 
       case 3:
-        console.log('3 play');
+        //console.log('3 play');
         break;
     }
   }
