@@ -1,3 +1,4 @@
+node_modules
 three-js/01/start_fin/01_normal/index.html
 three-js/01/start_fin/01_normal/three.js
 three-js/01/start_fin/02_module/index.html
@@ -14,3 +15,4 @@ three-js/01/start_fin/03_webpack/src/main.js
 three-js/01/start_fin/module_basic/hello.js
 three-js/01/start_fin/module_basic/index.html
 three-js/01/start_fin/module_basic/main.js
+three-js/02/basic_fin
