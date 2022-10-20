@@ -302,7 +302,10 @@
   /* window.addEventListener('DOMContentLoaded', setLayout); */ //document 로드 완료 시 로드
   
   //리소스 모드 로드 되면~
-  window.addEventListener('load', setLayout);
+  window.addEventListener('load', () => {
+    setLayout();
+    sceneInfo[0].objs.context.drawImage(sceneInfo[0].objs.videoImages[0], 0, 0);
+  });
   //윈도우 리사이즈 이벤틉 발생 시, 높이값 변경되도록.
   window.addEventListener('resize', setLayout);
 
