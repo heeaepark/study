@@ -67,9 +67,16 @@
         messageB: document.querySelector('#scroll-section-2 .b'),
         messageC: document.querySelector('#scroll-section-2 .c'),
         pinB: document.querySelector('#scroll-section-2 .b .pin'),
-        pinC: document.querySelector('#scroll-section-2 .c .pin')
+        pinC: document.querySelector('#scroll-section-2 .c .pin'),
+        canvas: document.querySelector('#video-canvas-2'),
+        context: document.querySelector('#video-canvas-2').getContext('2d'),
+        videoImages: [],
       },
       values: {
+        videoImageCount: 960,
+        imageSequence: [0, 959],
+        canvas_opacity_in: [0, 1, { start: 0, end: 0.1 }],
+        canvas_opacity_out: [1, 0, { start: 0.9, end: 1 }],
         messageA_translateY_in: [20, 0, { start: 0.15, end: 0.2 }],
         messageB_translateY_in: [30, 0, { start: 0.5, end: 0.55 }],
         messageC_translateY_in: [30, 0, { start: 0.72, end: 0.77 }],
@@ -112,7 +119,14 @@
       imgElem.src = `./video/001/IMG_${6726 + i}.jpg`;
       sceneInfo[0].objs.videoImages.push(imgElem);
     }
-    console.log(sceneInfo[0].objs.videoImages);
+
+    let imgElem2;
+    for(let i = 0; i < sceneInfo[2].values.videoImageCount; i++) {
+      imgElem2 = new Image();
+      imgElem2.src = `./video/002/IMG_${7027 + i}.jpg`;
+      sceneInfo[2].objs.videoImages.push(imgElem2);
+    }
+    
   }
   setCanvasImages()
 
@@ -141,6 +155,7 @@
 
     const heightRatio = window.innerHeight / 1080;
     sceneInfo[0].objs.canvas.style.transform = `translate(-50%, -50%) scale(${heightRatio})`
+    sceneInfo[2].objs.canvas.style.transform = `translate(-50%, -50%) scale(${heightRatio})`
   }
 
   function calcValues(values, currentYOffset) {
@@ -227,6 +242,16 @@
 
       case 2:
         //console.log('2 play');
+        let sequence2 = Math.round(calcValues(values.imageSequence, currentYOffset));
+        objs.context.drawImage(objs.videoImages[sequence2], 0, 0);
+        
+        if(scrollRatio <= 0.5) {
+          //in
+          objs.canvas.style.opacity = calcValues(values.canvas_opacity_in, currentYOffset);
+        } else {
+          //out
+          objs.canvas.style.opacity = calcValues(values.canvas_opacity_out, currentYOffset);
+        }
         if (scrollRatio <= 0.25) {
           // in
           objs.messageA.style.opacity = calcValues(values.messageA_opacity_in, currentYOffset);

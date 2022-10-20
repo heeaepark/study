@@ -125,6 +125,7 @@ a {
 }
 
 .sticky-elem.desc-message {
+	opacity: 0;
 	width: 50%;
 	font-weight: bold;
 }
