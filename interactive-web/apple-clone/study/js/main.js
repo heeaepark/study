@@ -137,6 +137,9 @@
 			}
 		}
     document.body.setAttribute('id', `show-scene-${currentScene}`);
+
+    const heightRatio = window.innerHeight / 1080;
+    sceneInfo[0].objs.canvas.style.transform = `translate(-50%, -50%) scale(${heightRatio})`
   }
 
   function calcValues(values, currentYOffset) {
