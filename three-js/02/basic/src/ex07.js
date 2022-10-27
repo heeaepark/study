@@ -1,8 +1,8 @@
 import * as THREE from 'three';
 
-// -----주제: 애니메이션
+// -----주제: fog(안개)
 export default function example() {
-  console.log(THREE);
+  console.log('Hello Three.js');
   //캔버스 크기 동적 조립
   const canvas = document.querySelector('#three-canvas');
   const renderer = new THREE.WebGLRenderer({ 
@@ -16,6 +16,7 @@ export default function example() {
 
   //Scene
   const scene = new THREE.Scene();
+  scene.fog = new THREE.Fog('black', 3, 7) //컬러, near, far
 
 
   //Camera
@@ -31,7 +32,7 @@ export default function example() {
   );
 
   //camera.position.x = 2 //카메라 x축 위치값 설정
-  //camera.position.y = 2 //카메라 y축 위치값 설정
+  camera.position.y = 1 //카메라 y축 위치값 설정
   camera.position.z = 5 //카메라 z축 위치값 설정
   //무대 위 카메라 추가
   scene.add(camera);
@@ -42,7 +43,8 @@ export default function example() {
   const light = new THREE.DirectionalLight(0xffffff, 1); //.DirectionalLight(빛의 색, 빛의 강도)
   scene.add(light) // 빛 추가
   light.position.x = 1;
-  light.position.z = 2;
+  light.position.y = 3;
+  light.position.z = 5;
   //------------------------------------
 
   //Mesh
@@ -52,22 +54,26 @@ export default function example() {
     // color: '#ff0000'
     color: 'red'
   });
-  const mesh = new THREE.Mesh(geometry, material);
-  scene.add(mesh)
+  const meshes = [];
+  let mesh;
+  for(let i = 0; i < 10; i++) {
+    mesh = new THREE.Mesh(geometry, material);
+    mesh.position.x = Math.random() * 5 - 2.5;
+    mesh.position.z = Math.random() * 5 - 2.5;
+    scene.add(mesh);
+    meshes.push(mesh);
+  }
 
 
-
+  let time = Date.now();
   // 그리기
   function draw() {
-    //mesh.rotation.y += 0.1; //각도값이 아닌 radiant 값(호도각)
-    mesh.rotation.y += THREE.MathUtils.radToDeg(2); //각도값을 호도값으로 변환(수치는 각도로 생각하면 됨 1이 1도)
-    //호도각을 사용해도 되고 .radToDeg를 사용해도 됨
-
-    mesh.position.y += 0.01;
-    if(mesh.position.y > 2) {
-      mesh.position.y = 0;
-      
-    }
+    const newTime = Date.now();
+    const deltaTime = newTime - time;
+    time = newTime;
+    meshes.forEach(item => {
+      item.rotation.y += deltaTime * 0.001;
+    })
     renderer.render(scene, camera);
 
     //window.requestAnimationFrame(draw); //애니메이션 호출 방법 1
